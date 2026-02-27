@@ -2,6 +2,8 @@
 
 Welcome to **Neo Prediction Arena**, a cutting-edge full-stack AI-powered fintech platform! This interactive arena bridges financial learning and real-world investing with a beautiful, dynamic 3D user interface.
 
+Permanent Link : https://neo-prediction-arena-gift-production.up.railway.app/
+
 ## 🌟 Key Features
 
 * **Interactive Learning & Market Playground:** Test your stock market predictions against AI bots in a simulated environment.
