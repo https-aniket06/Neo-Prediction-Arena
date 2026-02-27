@@ -46,4 +46,4 @@ Welcome to **Neo Prediction Arena**, a cutting-edge full-stack AI-powered fintec
    Run the frontend by using a local development server (like VS Code's "Live Server" extension) at the project root to serve the `index.html` file in `frontend/`.
 
 ---
-*Built to redefine modern financial exploration and learning.*
+*Built to redefine modern financial exploration and learning. Built With Team Bit Busters_Revamped.*
