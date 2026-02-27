@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StockPredict AI Playground</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#66ffdb",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0f231e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(102, 255, 219, 0.1);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(102, 255, 219, 0.15);
+        }
+        .candlestick-green { fill: #66ffdb; stroke: #66ffdb; }
+        .candlestick-red { fill: #ff6685; stroke: #ff6685; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between border-b border-primary/10 px-8 py-4 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">insights</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-xl font-bold tracking-tight">Predictor<span class="text-primary">Playground</span></h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Live Arena</a>
+
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
+<span class="material-symbols-outlined text-primary text-sm mr-2">account_balance_wallet</span>
+<span class="text-xs font-bold text-primary">$42,500.00</span>
+</div>
+<div class="size-10 rounded-full border-2 border-primary/30 p-0.5">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="User profile avatar circle" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBppmr_gS7hQTcRU11NUYFT6G-sD_0iMsAnhjdvG67rq-NIPNqXsBNPK73CNRpoJli7LXESx4_8qEW4JMfUMFpKX94nkMDMQ5XMYval3owsVTVKZyH225EdTQx8s0_4ziM08wYbXmKQ2rNPfaJtNzPLiSRFzDQjZRV9NsDdXsSglEyGDoua43h0LVgD0S92cFK46yzX6koeUVA28MOGOgoXpiNKEW7QAxjV6AWe6LexTpW6Daind-phxunciCsC6sLN2bJNtxIl5TzO')"></div>
+</div>
+</div>
+</header>
+<main class="flex flex-col lg:flex-row h-[calc(100vh-73px)] overflow-hidden">
+<!-- Sidebar: Assets & Controls -->
+<aside class="w-full lg:w-80 border-r border-primary/10 bg-background-light dark:bg-background-dark/50 overflow-y-auto p-6 flex flex-col gap-8">
+<!-- Asset Selector -->
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Select Asset</h3>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-3 rounded-xl bg-primary/20 border border-primary/40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">currency_bitcoin</span>
+<div class="text-left">
+<div class="text-sm font-bold">BTC/USD</div>
+<div class="text-[10px] text-primary/70">Bitcoin</div>
+</div>
+</div>
+<span class="text-xs font-bold text-primary">+2.4%</span>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-xl border border-primary/5 hover:bg-primary/5 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">monetization_on</span>
+<div class="text-left">
+<div class="text-sm font-bold">NVDA</div>
+<div class="text-[10px] text-slate-500">NVIDIA Corp.</div>
+</div>
+</div>
+<span class="text-xs font-bold text-red-400">-0.8%</span>
+</button>
+</div>
+</div>
+<!-- AI Status Visualization -->
+<div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-lg animate-pulse">psychology</span>
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary">AI Neural Engine</h3>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex justify-between text-xs">
+<span class="text-slate-400">Data Processing</span>
+<span class="text-primary font-mono">98.2%</span>
+</div>
+<div class="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary ai-glow" style="width: 98%"></div>
+</div>
+<p class="text-[10px] text-slate-500 italic mt-2">Processing 4.2M sentiment points/sec...</p>
+</div>
+</div>
+</div>
+<!-- Control Pad -->
+<div class="mt-auto space-y-6">
+<div class="space-y-3">
+<label class="text-xs font-bold uppercase tracking-widest text-slate-400">Prediction Direction</label>
+<div class="grid grid-cols-2 gap-3">
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-primary bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-3xl">trending_up</span>
+<span class="text-xs font-bold">BULLISH</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-xl border-2 border-slate-700 hover:border-red-500/50 hover:bg-red-500/10 transition-all text-slate-400 hover:text-red-500">
+<span class="material-symbols-outlined text-3xl">trending_down</span>
+<span class="text-xs font-bold">BEARISH</span>
+</button>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<label class="text-xs font-bold uppercase tracking-widest text-slate-400">Position Size</label>
+<span class="text-xs font-bold text-primary">$1,250.00</span>
+</div>
+<input class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+</div>
+<button class="w-full py-4 bg-primary text-background-dark font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    SUBMIT PREDICTION
+                </button>
+</div>
+</aside>
+<!-- Main Chart Area -->
+<section class="flex-1 flex flex-col relative">
+<!-- Chart Header -->
+<div class="flex items-center justify-between px-6 py-4 border-b border-primary/10">
+<div class="flex items-center gap-6">
+<div>
+<div class="text-2xl font-bold">$64,281.40</div>
+<div class="text-xs text-primary font-medium">+ $1,420.10 (2.41%)</div>
+</div>
+<div class="h-8 w-px bg-primary/10"></div>
+<div class="flex gap-2">
+<span class="px-2 py-1 rounded bg-slate-800 text-[10px] font-bold">1H</span>
+<span class="px-2 py-1 rounded bg-primary/20 text-primary text-[10px] font-bold">4H</span>
+<span class="px-2 py-1 rounded bg-slate-800 text-[10px] font-bold">1D</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">settings</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer">fullscreen</span>
+</div>
+</div>
+<!-- 3D Candlestick Container -->
+<div class="flex-1 relative bg-background-light dark:bg-background-dark/30 p-8">
+<!-- Grid Lines -->
+<div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: linear-gradient(to right, #66ffdb 1px, transparent 1px), linear-gradient(to bottom, #66ffdb 1px, transparent 1px); background-size: 80px 80px;"></div>
+<div class="w-full h-full relative flex items-center justify-center">
+<!-- SVG Mockup of 3D-styled Candles -->
+<svg class="w-full h-full" viewbox="0 0 800 400">
+<!-- Candles -->
+<g class="candlesticks">
+<!-- Candle 1 -->
+<line stroke="#ff6685" stroke-width="2" x1="100" x2="100" y1="200" y2="280"></line>
+<rect class="candlestick-red" height="40" rx="2" width="16" x="92" y="220"></rect>
+<!-- Candle 2 -->
+<line stroke="#66ffdb" stroke-width="2" x1="150" x2="150" y1="180" y2="260"></line>
+<rect class="candlestick-green" height="50" rx="2" width="16" x="142" y="190"></rect>
+<!-- Candle 3 -->
+<line stroke="#66ffdb" stroke-width="2" x1="200" x2="200" y1="160" y2="240"></line>
+<rect class="candlestick-green" height="30" rx="2" width="16" x="192" y="170"></rect>
+<!-- Candle 4 -->
+<line stroke="#ff6685" stroke-width="2" x1="250" x2="250" y1="140" y2="220"></line>
+<rect class="candlestick-red" height="60" rx="2" width="16" x="242" y="150"></rect>
+<!-- Active Price Line -->
+<line stroke="#66ffdb" stroke-dasharray="4" stroke-width="1" x1="0" x2="800" y1="180" y2="180"></line>
+<rect fill="#66ffdb" height="20" rx="4" width="60" x="740" y="170"></rect>
+<text fill="#0f231e" font-size="10" font-weight="bold" x="745" y="184">64,281</text>
+</g>
+<!-- Prediction Ghost Curves -->
+<path d="M250 180 Q 400 100 600 150" fill="none" opacity="0.6" stroke="#66ffdb" stroke-dasharray="8" stroke-width="3"></path>
+<path d="M250 180 Q 400 250 600 280" fill="none" opacity="0.4" stroke="#ff6685" stroke-dasharray="8" stroke-width="2"></path>
+</svg>
+<!-- Prediction UI Overlay -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-8 glass-panel p-6 rounded-3xl ai-glow">
+<div class="flex flex-col items-center">
+<div class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter mb-2">AI Logic Node</div>
+<div class="size-16 rounded-full border-4 border-primary/20 flex items-center justify-center relative">
+<span class="material-symbols-outlined text-primary text-2xl">neurology</span>
+<div class="absolute inset-0 border-4 border-primary rounded-full" style="clip-path: inset(0 0 15% 0);"></div>
+</div>
+</div>
+<div class="h-10 w-px bg-primary/20"></div>
+<div class="text-center">
+<div class="text-xs text-slate-400 font-medium">Confidence Score</div>
+<div class="text-4xl font-black text-primary tracking-tighter">84.2%</div>
+</div>
+<div class="h-10 w-px bg-primary/20"></div>
+<div class="flex flex-col">
+<div class="text-[10px] font-bold text-slate-500 uppercase mb-1">Sentiment Scan</div>
+<div class="flex gap-1">
+<div class="w-1 h-4 bg-primary rounded-full"></div>
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<div class="w-1 h-4 bg-primary rounded-full"></div>
+<div class="w-1 h-8 bg-primary rounded-full"></div>
+<div class="w-1 h-3 bg-primary/20 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparison Split Footer -->
+<div class="h-48 border-t border-primary/10 flex">
+<div class="flex-1 border-r border-primary/10 p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<h4 class="text-xs font-bold uppercase text-slate-500">Your Prediction</h4>
+<span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-bold uppercase">Manual</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-primary">north_east</span>
+<div>
+<div class="text-lg font-bold">Bullish +3.5%</div>
+<div class="text-xs text-slate-500">Target: $66,450</div>
+</div>
+</div>
+<div class="w-full h-1 bg-slate-800 rounded-full">
+<div class="h-full bg-primary" style="width: 45%"></div>
+</div>
+</div>
+<div class="flex-1 p-6 flex flex-col justify-between bg-primary/5">
+<div class="flex justify-between items-start">
+<h4 class="text-xs font-bold uppercase text-primary">AI Prediction</h4>
+<span class="text-[10px] px-2 py-0.5 rounded bg-primary text-background-dark font-bold uppercase">Optimized</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-3xl text-primary">trending_up</span>
+<div>
+<div class="text-lg font-bold text-primary">Bullish +5.2%</div>
+<div class="text-xs text-primary/70">Target: $67,800</div>
+</div>
+</div>
+<div class="w-full h-1 bg-primary/20 rounded-full">
+<div class="h-full bg-primary" style="width: 84%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Social / Feed -->
+<aside class="hidden xl:flex w-80 border-l border-primary/10 bg-background-light dark:bg-background-dark/50 flex-col">
+<div class="p-6 border-b border-primary/10">
+<h3 class="text-xs font-bold uppercase tracking-widest text-slate-400">Live Insights</h3>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="glass-panel p-4 rounded-xl border-l-4 border-l-primary">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-6 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xs">bolt</span>
+</div>
+<span class="text-xs font-bold text-primary">Neural Spike</span>
+</div>
+<p class="text-xs text-slate-300 leading-relaxed">Whale activity detected on Binance. Prediction confidence increasing.</p>
+</div>
+<div class="glass-panel p-4 rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-6 rounded-full bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-400 text-xs">public</span>
+</div>
+<span class="text-xs font-bold">Macro Event</span>
+</div>
+<p class="text-xs text-slate-400 leading-relaxed">FOMC meeting minutes released. Volatility expected in 14 minutes.</p>
+</div>
+<!-- AI Brain visualization processing -->
+<div class="mt-8 flex flex-col items-center">
+<div class="relative size-40">
+<div class="absolute inset-0 rounded-full border-2 border-primary/10 animate-[spin_10s_linear_infinite]"></div>
+<div class="absolute inset-4 rounded-full border-2 border-primary/20 border-dashed animate-[spin_15s_linear_infinite_reverse]"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-5xl text-primary opacity-50 ai-glow">biotech</span>
+</div>
+</div>
+<div class="mt-4 flex flex-col items-center gap-1">
+<div class="flex gap-1">
+<span class="size-1 bg-primary rounded-full animate-bounce"></span>
+<span class="size-1 bg-primary rounded-full animate-bounce [animation-delay:0.2s]"></span>
+<span class="size-1 bg-primary rounded-full animate-bounce [animation-delay:0.4s]"></span>
+</div>
+<span class="text-[10px] text-primary/50 font-mono">NEURAL_SYNC_ACTIVE</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

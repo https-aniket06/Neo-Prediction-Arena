@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Neo-FinTech | Quantum Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#1a0f0a",
+                        "neon-blue": "#00f2ff",
+                        "neon-green": "#39ff14",
+                        "neon-pink": "#ff00e5",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .neo-glow-orange {
+            box-shadow: 0 0 15px rgba(236, 91, 19, 0.4);
+        }
+
+        .neo-glow-blue {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
+
+        .floating-card {
+            transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .floating-card:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(-5px);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside
+            class="w-72 bg-white/5 dark:bg-black/20 border-r border-slate-200 dark:border-white/10 flex flex-col p-6 backdrop-blur-xl">
+            <div class="flex items-center gap-3 mb-12">
+                <div
+                    class="size-10 rounded-xl bg-gradient-to-tr from-primary to-neon-pink flex items-center justify-center text-white shadow-lg neo-glow-orange">
+                    <span class="material-symbols-outlined font-bold">token</span>
+                </div>
+                <div>
+                    <h1
+                        class="text-xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary to-neon-pink">
+                        NEO-FIN</h1>
+                    <p class="text-[10px] uppercase tracking-[0.2em] opacity-60">Quantum Era</p>
+                </div>
+            </div>
+            <nav class="space-y-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 text-slate-400 hover:bg-primary/10 hover:text-primary transition-all duration-300"
+                    href="neo-financial-hub.html">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="font-semibold tracking-wide">Dashboard</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-lg shadow-primary/20 transition-all duration-300"
+                    href="vibrant-3d-portfolio.html">
+                    <span class="material-symbols-outlined">analytics</span>
+                    <span class="font-semibold tracking-wide">Portfolio</span>
+                </a>
+                <!-- Future slots could go here, currently limited as requested -->
+            </nav>
+            <div class="mt-auto p-4 rounded-2xl glass-panel border-primary/20">
+                <p class="text-xs opacity-60 mb-2">Market Status</p>
+                <div class="flex items-center gap-2">
+                    <div class="size-2 rounded-full bg-neon-green animate-pulse"></div>
+                    <span class="text-sm font-medium">Global Live</span>
+                </div>
+            </div>
+        </aside>
+        <!-- Main Content Area -->
+        <main
+            class="flex-1 overflow-y-auto bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent">
+            <header class="flex justify-between items-center p-8">
+                <div>
+                    <h2 class="text-4xl font-black tracking-tight mb-1">Quantum Portfolio</h2>
+                    <p class="text-slate-500 dark:text-slate-400">Real-time holographic performance tracking active.</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex flex-col items-end">
+                        <span class="text-xs font-bold opacity-50 uppercase tracking-widest">Network Speed</span>
+                        <span class="text-neon-blue font-mono">1.2 TB/S</span>
+                    </div>
+                    <div class="size-12 rounded-full border-2 border-primary/50 p-1">
+                        <img alt="User profile" class="rounded-full w-full h-full object-cover"
+                            data-alt="Professional male portrait for profile"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDArKYljriR94g_vZYGLCJ1Qhqz82F9VOmmftiGCgYB8PjnDnchIz20CE5-bTSvPOn5wNHhja7rsJIz7B0r0FPm_ZAOL-vQYnNTEAo6of0ZYQKckulfIasHp4PDTLfW-zWkDcrrhV192ZYx3sQQm6vEAG0RK3fK6OVB1EHQWPgV7M428S4ZcW1qrtc8oQKndPidg2k4bFCGyIN1YKxH-7MgYKWTDLmyrmqPd3B-IHbd2tcShYEA3CaQD4EFgrk9J3SVCPaBMJCjbyaA" />
+                    </div>
+                </div>
+            </header>
+            <div class="px-8 pb-12 space-y-8">
+                <!-- Hero Chart Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 glass-panel rounded-[2rem] p-8 relative overflow-hidden group">
+                        <!-- Holographic Decorative Elements -->
+                        <div
+                            class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-colors">
+                        </div>
+                        <div
+                            class="absolute -bottom-24 -left-24 w-64 h-64 bg-neon-blue/20 blur-[100px] rounded-full group-hover:bg-neon-blue/30 transition-colors">
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-end mb-8">
+                                <div>
+                                    <p class="text-sm font-bold opacity-60 uppercase tracking-widest mb-1">Total Net
+                                        Worth</p>
+                                    <h3 class="text-5xl font-black tracking-tighter">$1,284,430.50</h3>
+                                    <div class="flex items-center gap-2 mt-2 text-neon-green">
+                                        <span class="material-symbols-outlined text-sm">trending_up</span>
+                                        <span class="font-bold">+12.5% <span
+                                                class="opacity-60 text-xs text-slate-400 ml-1">THIS MONTH</span></span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="switchQuantumTimeframe(this, '1D')"
+                                        class="q-timeframe px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all">1D</button>
+                                    <button onclick="switchQuantumTimeframe(this, '1W')"
+                                        class="q-timeframe px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all">1W</button>
+                                    <button onclick="switchQuantumTimeframe(this, '1M')"
+                                        class="q-timeframe px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold shadow-lg neo-glow-orange transition-all">1M</button>
+                                    <button onclick="switchQuantumTimeframe(this, '1Y')"
+                                        class="q-timeframe px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all">1Y</button>
+                                </div>
+                            </div>
+                            <!-- Main Holographic Chart -->
+                            <div class="h-64 w-full relative">
+                                <svg class="w-full h-full drop-shadow-[0_0_15px_rgba(236,91,19,0.5)]"
+                                    preserveaspectratio="none" viewbox="0 0 1000 200">
+                                    <defs>
+                                        <lineargradient id="chartGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                                            <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.4"></stop>
+                                            <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"></stop>
+                                        </lineargradient>
+                                    </defs>
+                                    <path
+                                        d="M0,150 Q50,140 100,160 T200,130 T300,150 T400,80 T500,100 T600,40 T700,70 T800,20 T900,50 T1000,10"
+                                        fill="none" stroke="#ec5b13" stroke-linecap="round" stroke-width="4"></path>
+                                    <path
+                                        d="M0,150 Q50,140 100,160 T200,130 T300,150 T400,80 T500,100 T600,40 T700,70 T800,20 T900,50 T1000,10 L1000,200 L0,200 Z"
+                                        fill="url(#chartGradient)"></path>
+                                    <!-- Animated pulse points -->
+                                    <circle class="animate-ping" cx="1000" cy="10" fill="#ec5b13" r="6"></circle>
+                                    <circle cx="1000" cy="10" fill="#ec5b13" r="4"></circle>
+                                </svg>
+                                <!-- Grid Lines -->
+                                <div class="absolute inset-0 grid grid-cols-6 pointer-events-none opacity-10">
+                                    <div class="border-l border-white/20"></div>
+                                    <div class="border-l border-white/20"></div>
+                                    <div class="border-l border-white/20"></div>
+                                    <div class="border-l border-white/20"></div>
+                                    <div class="border-l border-white/20"></div>
+                                    <div class="border-l border-white/20"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Allocation Donut Chart -->
+                    <div
+                        class="glass-panel rounded-[2rem] p-8 flex flex-col items-center justify-center relative overflow-hidden group">
+                        <h4 class="absolute top-8 left-8 text-sm font-bold opacity-60 uppercase tracking-widest">Asset
+                            Allocation</h4>
+                        <div class="relative size-48">
+                            <!-- SVG Donut -->
+                            <svg class="size-full -rotate-90 transform" viewbox="0 0 100 100">
+                                <circle cx="50" cy="50" fill="transparent" r="40" stroke="rgba(255,255,255,0.05)"
+                                    stroke-width="12"></circle>
+                                <!-- BTC Slice -->
+                                <circle class="drop-shadow-[0_0_8px_rgba(236,91,19,0.6)]" cx="50" cy="50"
+                                    fill="transparent" r="40" stroke="#ec5b13" stroke-dasharray="113.1 251.3"
+                                    stroke-dashoffset="0" stroke-width="12"></circle>
+                                <!-- ETH Slice -->
+                                <circle class="drop-shadow-[0_0_8px_rgba(0,242,255,0.6)]" cx="50" cy="50"
+                                    fill="transparent" r="40" stroke="#00f2ff" stroke-dasharray="75.4 251.3"
+                                    stroke-dashoffset="-113.1" stroke-width="12"></circle>
+                                <!-- SOL Slice -->
+                                <circle class="drop-shadow-[0_0_8px_rgba(255,0,229,0.6)]" cx="50" cy="50"
+                                    fill="transparent" r="40" stroke="#ff00e5" stroke-dasharray="62.8 251.3"
+                                    stroke-dashoffset="-188.5" stroke-width="12"></circle>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-3xl font-black">12</span>
+                                <span class="text-[10px] opacity-60 font-bold uppercase">Assets</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 w-full space-y-3">
+                            <div class="flex justify-between items-center text-xs font-bold">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-2 rounded-full bg-primary"></div>
+                                    <span>Stablecoins</span>
+                                </div>
+                                <span>45%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs font-bold">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-2 rounded-full bg-neon-blue"></div>
+                                    <span>Blue Chips</span>
+                                </div>
+                                <span>30%</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs font-bold">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-2 rounded-full bg-neon-pink"></div>
+                                    <span>Emerging</span>
+                                </div>
+                                <span>25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Floating Glass Cards for Assets -->
+                <div>
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-xl font-black tracking-tight">Core Holdings</h4>
+                        <button onclick="alert('Loading complete asset galaxy view...')"
+                            class="text-sm font-bold text-primary flex items-center gap-1 hover:opacity-80 transition-opacity">
+                            View All Assets <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                        <!-- Asset Card 1 -->
+                        <div class="floating-card glass-panel rounded-3xl p-6 border-l-4 border-l-primary/60 group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div
+                                    class="size-12 rounded-2xl bg-primary/20 flex items-center justify-center text-primary border border-primary/20 group-hover:neo-glow-orange transition-all duration-500">
+                                    <span class="material-symbols-outlined text-2xl">currency_bitcoin</span>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold opacity-50 uppercase">Balance</p>
+                                    <p class="font-bold">2.45 BTC</p>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-black tracking-tight">Bitcoin</h5>
+                            <p class="text-sm opacity-60 mb-4">Leading Digital Gold</p>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs font-bold opacity-50 uppercase">Value</p>
+                                    <p class="text-xl font-bold">$158,240.00</p>
+                                </div>
+                                <div class="text-neon-green text-sm font-bold">+4.2%</div>
+                            </div>
+                        </div>
+                        <!-- Asset Card 2 -->
+                        <div class="floating-card glass-panel rounded-3xl p-6 border-l-4 border-l-neon-blue/60 group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div
+                                    class="size-12 rounded-2xl bg-neon-blue/20 flex items-center justify-center text-neon-blue border border-neon-blue/20 group-hover:neo-glow-blue transition-all duration-500">
+                                    <span class="material-symbols-outlined text-2xl">diamond</span>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold opacity-50 uppercase">Balance</p>
+                                    <p class="font-bold">42.10 ETH</p>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-black tracking-tight">Ethereum</h5>
+                            <p class="text-sm opacity-60 mb-4">Smart Contract Layer</p>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs font-bold opacity-50 uppercase">Value</p>
+                                    <p class="text-xl font-bold">$92,450.12</p>
+                                </div>
+                                <div class="text-neon-green text-sm font-bold">+1.8%</div>
+                            </div>
+                        </div>
+                        <!-- Asset Card 3 -->
+                        <div class="floating-card glass-panel rounded-3xl p-6 border-l-4 border-l-neon-pink/60 group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div
+                                    class="size-12 rounded-2xl bg-neon-pink/20 flex items-center justify-center text-neon-pink border border-neon-pink/20 group-hover:shadow-[0_0_20px_rgba(255,0,229,0.3)] transition-all duration-500">
+                                    <span class="material-symbols-outlined text-2xl">hub</span>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold opacity-50 uppercase">Balance</p>
+                                    <p class="font-bold">850 SOL</p>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-black tracking-tight">Solana</h5>
+                            <p class="text-sm opacity-60 mb-4">High-Speed Ecosystem</p>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs font-bold opacity-50 uppercase">Value</p>
+                                    <p class="text-xl font-bold">$124,105.00</p>
+                                </div>
+                                <div class="text-neon-pink text-sm font-bold">-0.5%</div>
+                            </div>
+                        </div>
+                        <!-- Asset Card 4 -->
+                        <div class="floating-card glass-panel rounded-3xl p-6 border-l-4 border-l-neon-green/60 group">
+                            <div class="flex justify-between items-start mb-4">
+                                <div
+                                    class="size-12 rounded-2xl bg-neon-green/20 flex items-center justify-center text-neon-green border border-neon-green/20 group-hover:shadow-[0_0_20px_rgba(57,255,20,0.3)] transition-all duration-500">
+                                    <span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] font-bold opacity-50 uppercase">Balance</p>
+                                    <p class="font-bold">50,000 USDC</p>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-black tracking-tight">USDC</h5>
+                            <p class="text-sm opacity-60 mb-4">Liquidity Reserve</p>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <p class="text-xs font-bold opacity-50 uppercase">Value</p>
+                                    <p class="text-xl font-bold">$50,000.00</p>
+                                </div>
+                                <div class="text-slate-400 text-sm font-bold">STABLE</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer / Statistics Bar -->
+                <div class="flex flex-wrap gap-4 p-4 glass-panel rounded-2xl">
+                    <div class="flex-1 min-w-[200px] p-4 flex flex-col gap-1 border-r border-white/10 last:border-0">
+                        <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">Global Rank</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black">#412</span>
+                            <span class="text-neon-green text-xs font-bold flex items-center">
+                                <span class="material-symbols-outlined text-sm">arrow_upward</span> 12
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-[200px] p-4 flex flex-col gap-1 border-r border-white/10 last:border-0">
+                        <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">Total Yield (AP)</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black">8.42%</span>
+                            <span class="text-neon-blue text-xs font-bold">OPTIMIZED</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-[200px] p-4 flex flex-col gap-1 border-r border-white/10 last:border-0">
+                        <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">Network Rewards</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black">+$4,201</span>
+                            <span class="text-primary text-xs font-bold">CLAIMABLE</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 min-w-[200px] p-4 flex flex-col gap-1 border-r border-white/10 last:border-0">
+                        <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">Active Nodes</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl font-black">4</span>
+                            <span class="text-neon-green text-xs font-bold">STAKED</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="neo-api.js"></script>
+    <script>
+        if (!requireAuth()) throw 'Not authenticated';
+
+        async function loadPortfolio() {
+            const [portfolio, holdings] = await Promise.all([
+                apiGet('/portfolio'),
+                apiGet('/portfolio/holdings')
+            ]);
+
+            if (portfolio) {
+                // Update net worth
+                const netEl = document.querySelector('.text-5xl.font-black');
+                if (netEl) netEl.textContent = '$' + Number(portfolio.total_value).toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+                // Update gain
+                const gainEl = document.querySelector('.text-neon-green');
+                if (gainEl && gainEl.querySelector) {
+                    const spanEl = gainEl.querySelector('.font-bold');
+                    if (spanEl) spanEl.innerHTML = '+' + portfolio.total_gain_pct + '%<span class="opacity-60 text-xs text-slate-400 ml-1">THIS MONTH</span>';
+                }
+            }
+
+            if (holdings?.data) {
+                const cardsContainer = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.xl\\:grid-cols-4');
+                if (cardsContainer) {
+                    cardsContainer.innerHTML = '';
+                    const borderColors = ['primary', 'neon-blue', 'neon-pink', 'neon-green'];
+                    const icons = ['currency_bitcoin', 'diamond', 'hub', 'account_balance_wallet'];
+
+                    holdings.data.forEach((h, i) => {
+                        const color = borderColors[i % borderColors.length];
+                        const icon = icons[i % icons.length];
+                        const isUp = (h.change_pct || 0) >= 0;
+
+                        cardsContainer.innerHTML += `
+          <div class="floating-card glass-panel rounded-3xl p-6 border-l-4 border-l-${color}/60 group">
+            <div class="flex justify-between items-start mb-4">
+              <div class="size-12 rounded-2xl bg-${color}/20 flex items-center justify-center text-${color} border border-${color}/20 transition-all duration-500">
+                <span class="material-symbols-outlined text-2xl">${icon}</span>
+              </div>
+              <div class="text-right">
+                <p class="text-[10px] font-bold opacity-50 uppercase">Holdings</p>
+                <p class="font-bold">${Number(h.quantity || 0).toLocaleString()} ${h.symbol}</p>
+              </div>
+            </div>
+            <h5 class="text-lg font-black tracking-tight">${h.name}</h5>
+            <p class="text-sm opacity-60 mb-4">${h.asset_type || h.symbol}</p>
+            <div class="flex justify-between items-end">
+              <div>
+                <p class="text-xs font-bold opacity-50 uppercase">Value</p>
+                <p class="text-xl font-bold">$${Number(h.total_value || h.current_price * h.quantity).toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              </div>
+              <div class="${isUp ? 'text-neon-green' : 'text-neon-pink'} text-sm font-bold">${isUp ? '+' : ''}${(h.change_pct || 0).toFixed(1)}%</div>
+            </div>
+          </div>`;
+                    });
+                }
+            }
+        }
+        loadPortfolio();
+
+        function switchQuantumTimeframe(btn, tf) {
+            document.querySelectorAll('.q-timeframe').forEach(b => {
+                b.className = 'q-timeframe px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all';
+            });
+            btn.className = 'q-timeframe px-4 py-2 rounded-lg bg-primary text-white text-xs font-bold shadow-lg neo-glow-orange transition-all';
+            // Simulate holographic loading visual
+            const visualContainer = document.querySelector('svg.drop-shadow-\\[0_0_15px_rgba\\(236\\,91\\,19\\,0\\.5\\)\\]');
+            if (visualContainer) {
+                visualContainer.style.opacity = '0.3';
+                visualContainer.style.filter = 'hue-rotate(90deg)';
+                setTimeout(() => {
+                    visualContainer.style.opacity = '1';
+                    visualContainer.style.filter = 'hue-rotate(0deg)';
+                }, 400);
+            }
+        }
+    </script>
+</body>
+
+</html>

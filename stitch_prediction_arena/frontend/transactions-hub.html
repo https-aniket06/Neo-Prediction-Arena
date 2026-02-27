@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>AI Finance - Hyper-Animated Transactions</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#66ffdb",
+                        "secondary": "#bd34fe",
+                        "accent-blue": "#00d2ff",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#050b0a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-glow-primary {
+            box-shadow: 0 0 20px rgba(102, 255, 219, 0.15);
+            border: 1px solid rgba(102, 255, 219, 0.3);
+        }
+
+        .glass-glow-secondary {
+            box-shadow: 0 0 20px rgba(189, 52, 254, 0.15);
+            border: 1px solid rgba(189, 52, 254, 0.3);
+        }
+
+        .neo-gradient-text {
+            background: linear-gradient(90deg, #66ffdb, #00d2ff, #bd34fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mesh-bg {
+            background-color: #050b0a;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(102, 255, 219, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(189, 52, 254, 0.1) 0px, transparent 50%);
+        }
+
+        .three-d-node {
+            transform: perspective(1000px) rotateX(10deg) rotateY(-5deg);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 mesh-bg min-h-screen overflow-x-hidden">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Minimalist Sidebar -->
+        <aside class="w-20 lg:w-64 flex flex-col border-r border-white/5 bg-background-dark/50 backdrop-blur-xl">
+            <div class="p-6 flex items-center gap-3">
+                <div
+                    class="size-10 rounded-xl bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-lg shadow-primary/20">
+                    <span class="material-symbols-outlined text-background-dark font-bold">bolt</span>
+                </div>
+                <div class="hidden lg:block">
+                    <h1 class="text-white text-base font-bold leading-none">AI FINANCE</h1>
+                    <p class="text-primary text-[10px] font-bold tracking-widest mt-1 uppercase">Quantum Tier</p>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 mt-8 flex flex-col gap-4">
+                <a href="neo-financial-hub.html"
+                    class="flex items-center gap-4 px-4 py-3 rounded-xl bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white transition-all cursor-pointer">
+                    <span class="material-symbols-outlined font-bold">dashboard</span>
+                    <span class="hidden lg:block font-bold text-sm">Dashboard</span>
+                </a>
+                <div
+                    class="flex items-center gap-4 px-4 py-3 rounded-xl bg-primary text-background-dark shadow-[0_0_20px_rgba(102,255,219,0.4)] cursor-pointer">
+                    <span class="material-symbols-outlined font-bold">swap_horiz</span>
+                    <span class="hidden lg:block font-bold text-sm">Transactions</span>
+                </div>
+
+            </nav>
+            <div class="p-4">
+                <button onclick="alert('Redirecting to upgrade page...')"
+                    class="w-full flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white rounded-xl py-3 border border-white/10 transition-all">
+                    <span class="material-symbols-outlined text-sm">rocket_launch</span>
+                    <span class="hidden lg:block text-xs font-bold uppercase tracking-wider">Upgrade</span>
+                </button>
+            </div>
+        </aside>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-y-auto relative">
+            <!-- Header -->
+            <header class="flex items-center justify-between p-8">
+                <div>
+                    <h2 class="text-white text-4xl font-black tracking-tighter uppercase italic">Transaction History
+                    </h2>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+                        <p class="text-slate-400 text-xs font-medium tracking-wide">HYPER-LIQUIDITY MONITORING ACTIVE
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="alert('Exporting data...')"
+                        class="glass px-6 py-2.5 rounded-full text-white text-sm font-bold flex items-center gap-2 hover:bg-white/10 transition-all">
+                        <span class="material-symbols-outlined text-sm">download</span> Export
+                    </button>
+                </div>
+            </header>
+            <!-- 3D Liquidity Visualization -->
+            <section class="px-8 py-4 relative h-[400px]">
+                <div class="w-full h-full glass rounded-3xl relative overflow-hidden flex items-center justify-center">
+                    <!-- Background Visual Decor -->
+                    <div class="absolute inset-0 opacity-20 pointer-events-none"
+                        style="background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0); background-size: 24px 24px;">
+                    </div>
+                    <!-- Flow Nodes -->
+                    <div class="flex items-center justify-between w-full px-20 relative z-10">
+                        <!-- Income Node -->
+                        <div class="flex flex-col items-center gap-4 three-d-node">
+                            <div
+                                class="size-24 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(102,255,219,0.3)]">
+                                <span class="material-symbols-outlined text-primary text-4xl">trending_up</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-primary text-xs font-black uppercase tracking-widest">Inflow</p>
+                                <p class="text-white text-2xl font-bold">$124,500.00</p>
+                            </div>
+                        </div>
+                        <!-- Central Flow Path (Animated via CSS) -->
+                        <div class="flex-1 px-8 relative h-32">
+                            <svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 400 100">
+                                <path d="M0 50 Q 200 -20 400 50" fill="none" stroke="url(#cyan-gradient)"
+                                    stroke-dasharray="10 5" stroke-width="4">
+                                    <animate attributename="stroke-dashoffset" dur="3s" from="100"
+                                        repeatcount="indefinite" to="0"></animate>
+                                </path>
+                                <path d="M0 50 Q 200 120 400 50" fill="none" stroke="url(#magenta-gradient)"
+                                    stroke-dasharray="10 5" stroke-width="4">
+                                    <animate attributename="stroke-dashoffset" dur="3s" from="0"
+                                        repeatcount="indefinite" to="100"></animate>
+                                </path>
+                                <defs>
+                                    <lineargradient id="cyan-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#66ffdb;stop-opacity:1"></stop>
+                                        <stop offset="100%" style="stop-color:#00d2ff;stop-opacity:1"></stop>
+                                    </lineargradient>
+                                    <lineargradient id="magenta-gradient" x1="0%" x2="100%" y1="0%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#bd34fe;stop-opacity:1"></stop>
+                                        <stop offset="100%" style="stop-color:#ff00ea;stop-opacity:1"></stop>
+                                    </lineargradient>
+                                </defs>
+                            </svg>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+                                <span
+                                    class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-2 block">Net
+                                    Velocity</span>
+                                <div class="glass px-4 py-2 rounded-xl border-primary/20">
+                                    <span class="neo-gradient-text text-xl font-black">+24.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Expenses Node -->
+                        <div class="flex flex-col items-center gap-4 three-d-node"
+                            style="transform: perspective(1000px) rotateX(10deg) rotateY(5deg);">
+                            <div
+                                class="size-24 rounded-full bg-secondary/10 border-2 border-secondary flex items-center justify-center shadow-[0_0_40px_rgba(189,52,254,0.3)]">
+                                <span class="material-symbols-outlined text-secondary text-4xl">trending_down</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-secondary text-xs font-black uppercase tracking-widest">Outflow</p>
+                                <p class="text-white text-2xl font-bold">$92,300.00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-6 left-1/2 -translate-x-1/2">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest italic">Live Liquidity
+                            Fabric Visualization</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Transaction Cards Grid -->
+            <section class="px-8 py-6">
+                <h3 class="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary">schedule</span> Recent Blocks
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div
+                        class="glass glass-glow-primary p-6 rounded-2xl relative group cursor-pointer transition-all hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="size-12 rounded-xl bg-primary/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary">currency_bitcoin</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-primary font-black text-lg">+$1,240.50</p>
+                                <p class="text-slate-500 text-[10px] uppercase font-bold">Confirmed</p>
+                            </div>
+                        </div>
+                        <h4 class="text-white font-bold text-lg leading-tight">ETH Smart Contract</h4>
+                        <p class="text-slate-400 text-sm mb-4">Staking rewards distribution</p>
+                        <div class="flex items-center justify-between border-t border-white/5 pt-4">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">TX: 0x82...f9a</span>
+                            <span class="material-symbols-outlined text-slate-400 text-sm">arrow_forward_ios</span>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div
+                        class="glass glass-glow-secondary p-6 rounded-2xl relative group cursor-pointer transition-all hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="size-12 rounded-xl bg-secondary/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-secondary">show_chart</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-secondary font-black text-lg">-$840.00</p>
+                                <p class="text-slate-500 text-[10px] uppercase font-bold">Executed</p>
+                            </div>
+                        </div>
+                        <h4 class="text-white font-bold text-lg leading-tight">TSLA Purchase</h4>
+                        <p class="text-slate-400 text-sm mb-4">Limit order fulfillment</p>
+                        <div class="flex items-center justify-between border-t border-white/5 pt-4">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">TX: NASDAQ_992</span>
+                            <span class="material-symbols-outlined text-slate-400 text-sm">arrow_forward_ios</span>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div
+                        class="glass p-6 rounded-2xl border-white/10 relative group cursor-pointer transition-all hover:scale-[1.02]">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="size-12 rounded-xl bg-white/5 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-slate-300">account_balance</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-white font-black text-lg">-$4,000.00</p>
+                                <p class="text-slate-500 text-[10px] uppercase font-bold">Processing</p>
+                            </div>
+                        </div>
+                        <h4 class="text-white font-bold text-lg leading-tight">Internal Transfer</h4>
+                        <p class="text-slate-400 text-sm mb-4">Vault -&gt; Main Checking</p>
+                        <div class="flex items-center justify-between border-t border-white/5 pt-4">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">TX: BANK_3301</span>
+                            <span class="material-symbols-outlined text-slate-400 text-sm">arrow_forward_ios</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- 3D Cash Flow Chart -->
+            <section class="px-8 py-6">
+                <div class="glass rounded-3xl p-8 border-white/5 relative overflow-hidden">
+                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                        <div class="flex-1">
+                            <h3 class="text-white text-lg font-bold mb-6 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-secondary">donut_large</span> Expense
+                                Categories
+                            </h3>
+                            <div class="space-y-4">
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-default group">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-3 rounded-full bg-[#bd34fe] shadow-[0_0_10px_#bd34fe]"></div>
+                                        <span class="text-slate-300 font-medium">Housing</span>
+                                    </div>
+                                    <span class="text-white font-bold">42%</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-3 rounded-full bg-[#66ffdb] shadow-[0_0_10px_#66ffdb]"></div>
+                                        <span class="text-slate-300 font-medium">Food &amp; Dining</span>
+                                    </div>
+                                    <span class="text-white font-bold">18%</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-3 rounded-full bg-[#a3ff33] shadow-[0_0_10px_#a3ff33]"></div>
+                                        <span class="text-slate-300 font-medium">Transport</span>
+                                    </div>
+                                    <span class="text-white font-bold">15%</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-3 rounded-full bg-[#ff9e33] shadow-[0_0_10px_#ff9e33]"></div>
+                                        <span class="text-slate-300 font-medium">Entertainment</span>
+                                    </div>
+                                    <span class="text-white font-bold">12%</span>
+                                </div>
+                                <div
+                                    class="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all cursor-default">
+                                    <div class="flex items-center gap-3">
+                                        <div class="size-3 rounded-full bg-[#00d2ff] shadow-[0_0_10px_#00d2ff]"></div>
+                                        <span class="text-slate-300 font-medium">Savings</span>
+                                    </div>
+                                    <span class="text-white font-bold">13%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative flex-1 flex items-center justify-center">
+                            <div class="relative size-64">
+                                <svg class="size-full -rotate-90" viewbox="0 0 100 100">
+                                    <circle class="text-white/5" cx="50" cy="50" fill="transparent" r="40"
+                                        stroke="currentColor" stroke-width="12"></circle>
+                                    <circle cx="50" cy="50" fill="transparent" r="40" stroke="#bd34fe"
+                                        stroke-dasharray="251.2" stroke-dashoffset="145.7" stroke-linecap="round"
+                                        stroke-width="12" style="filter: drop-shadow(0 0 8px #bd34fe);"></circle>
+                                    <circle cx="50" cy="50" fill="transparent" r="40" stroke="#66ffdb"
+                                        stroke-dasharray="251.2" stroke-dashoffset="206" stroke-linecap="round"
+                                        stroke-width="12" style="filter: drop-shadow(0 0 8px #66ffdb);"></circle>
+                                    <circle cx="50" cy="50" fill="transparent" r="40" stroke="#a3ff33"
+                                        stroke-dasharray="251.2" stroke-dashoffset="221" stroke-linecap="round"
+                                        stroke-width="12" style="filter: drop-shadow(0 0 8px #a3ff33);"></circle>
+                                    <circle cx="50" cy="50" fill="transparent" r="40" stroke="#ff9e33"
+                                        stroke-dasharray="251.2" stroke-dashoffset="231" stroke-linecap="round"
+                                        stroke-width="12" style="filter: drop-shadow(0 0 8px #ff9e33);"></circle>
+                                    <circle cx="50" cy="50" fill="transparent" r="40" stroke="#00d2ff"
+                                        stroke-dasharray="251.2" stroke-dashoffset="241" stroke-linecap="round"
+                                        stroke-width="12" style="filter: drop-shadow(0 0 8px #00d2ff);"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <p class="text-slate-500 text-[10px] font-black uppercase tracking-widest">Total
+                                        Outflow</p>
+                                    <p class="text-white text-2xl font-black">$92,300</p>
+                                </div>
+                            </div>
+                            <div
+                                class="absolute -z-10 size-72 bg-gradient-to-tr from-secondary/20 to-primary/20 blur-3xl rounded-full opacity-50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="px-8 py-6 mb-12">
+                <div class="glass rounded-3xl p-8 border-white/5">
+                    <div class="flex items-end justify-between gap-4 h-48">
+                        <!-- Bar Week 1 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg shadow-[0_0_15px_rgba(102,255,219,0.3)]"
+                                    style="height: 60%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg shadow-[0_0_15px_rgba(189,52,254,0.3)]"
+                                    style="height: 40%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Mon</span>
+                        </div>
+                        <!-- Bar Week 2 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg"
+                                    style="height: 80%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 20%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Tue</span>
+                        </div>
+                        <!-- Bar Week 3 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg"
+                                    style="height: 45%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 90%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Wed</span>
+                        </div>
+                        <!-- Bar Week 4 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg"
+                                    style="height: 70%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 30%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Thu</span>
+                        </div>
+                        <!-- Bar Week 5 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg shadow-[0_0_20px_rgba(102,255,219,0.5)]"
+                                    style="height: 95%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 15%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Fri</span>
+                        </div>
+                        <!-- Bar Week 6 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg"
+                                    style="height: 55%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 50%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Sat</span>
+                        </div>
+                        <!-- Bar Week 7 -->
+                        <div class="flex-1 flex flex-col items-center gap-3">
+                            <div class="w-full flex gap-1 justify-center items-end h-full">
+                                <div class="w-4 bg-gradient-to-t from-primary/20 to-primary rounded-t-lg"
+                                    style="height: 40%;"></div>
+                                <div class="w-4 bg-gradient-to-t from-secondary/20 to-secondary rounded-t-lg"
+                                    style="height: 25%;"></div>
+                            </div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Sun</span>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex items-center justify-between border-t border-white/5 pt-6">
+                        <div class="flex gap-6">
+                            <div class="flex items-center gap-2">
+                                <div class="size-3 rounded-full bg-primary shadow-[0_0_10px_rgba(102,255,219,0.8)]">
+                                </div>
+                                <span class="text-xs text-slate-400 font-medium">Income Intensity</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="size-3 rounded-full bg-secondary shadow-[0_0_10px_rgba(189,52,254,0.8)]">
+                                </div>
+                                <span class="text-xs text-slate-400 font-medium">Expense Density</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 italic">Projected ROI: <span
+                                class="text-primary font-bold">+12.4%</span></p>
+                    </div>
+                </div>
+            </section>
+            <!-- Market Ticker Footer -->
+            <footer
+                class="mt-auto h-12 bg-black/80 backdrop-blur-md border-t border-white/5 flex items-center overflow-hidden whitespace-nowrap">
+                <div class="flex gap-12 px-8 animate-[ticker_20s_linear_infinite]">
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">BTC/USD</span>
+                        <span class="text-primary font-black text-xs">$64,321.40</span>
+                        <span class="text-primary text-[8px] font-bold">+2.4%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">ETH/USD</span>
+                        <span class="text-primary font-black text-xs">$3,412.10</span>
+                        <span class="text-primary text-[8px] font-bold">+0.8%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">TSLA</span>
+                        <span class="text-secondary font-black text-xs">$174.20</span>
+                        <span class="text-secondary text-[8px] font-bold">-1.2%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">NVDA</span>
+                        <span class="text-primary font-black text-xs">$892.40</span>
+                        <span class="text-primary text-[8px] font-bold">+4.1%</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">SOL/USD</span>
+                        <span class="text-primary font-black text-xs">$145.22</span>
+                        <span class="text-primary text-[8px] font-bold">+5.9%</span>
+                    </div>
+                    <!-- Duplicate for loop -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-slate-500 font-bold text-[10px]">BTC/USD</span>
+                        <span class="text-primary font-black text-xs">$64,321.40</span>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <style>
+        @keyframes ticker {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+    <script src="neo-api.js"></script>
+    <script>
+        if (!requireAuth()) throw 'Not authenticated';
+
+        async function loadTransactions() {
+            const [txns, summary] = await Promise.all([
+                apiGet('/transactions'),
+                apiGet('/transactions/summary')
+            ]);
+
+            if (summary) {
+                // Update inflow
+                const inflowEl = document.querySelectorAll('.text-2xl.font-bold');
+                if (inflowEl[0]) inflowEl[0].textContent = '$' + Number(summary.total_inflow).toLocaleString('en-US', { minimumFractionDigits: 2 });
+                if (inflowEl[1]) inflowEl[1].textContent = '$' + Number(summary.total_outflow).toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+                // Update net velocity
+                const netVel = document.querySelector('.neo-gradient-text');
+                if (netVel && summary.net_flow_pct) netVel.textContent = (summary.net_flow_pct >= 0 ? '+' : '') + summary.net_flow_pct + '%';
+
+                // Update total outflow in donut
+                const outflowCenter = document.querySelector('.text-white.text-2xl.font-black');
+                if (outflowCenter) outflowCenter.textContent = '$' + Number(summary.total_outflow).toLocaleString();
+            }
+
+            if (txns?.data) {
+                const grid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3');
+                if (grid) {
+                    grid.innerHTML = '';
+                    txns.data.forEach(tx => {
+                        const isCredit = tx.direction === 'IN';
+                        grid.innerHTML += `
+          <div class="glass ${isCredit ? 'glass-glow-primary' : 'glass-glow-secondary'} p-6 rounded-2xl relative group cursor-pointer transition-all hover:scale-[1.02]">
+            <div class="flex justify-between items-start mb-6">
+              <div class="size-12 rounded-xl ${isCredit ? 'bg-primary/20' : 'bg-secondary/20'} flex items-center justify-center">
+                <span class="material-symbols-outlined ${isCredit ? 'text-primary' : 'text-secondary'}">${isCredit ? 'trending_up' : 'show_chart'}</span>
+              </div>
+              <div class="text-right">
+                <p class="${isCredit ? 'text-primary' : 'text-secondary'} font-black text-lg">${isCredit ? '+' : '-'}$${Number(tx.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                <p class="text-slate-500 text-[10px] uppercase font-bold">${tx.status}</p>
+              </div>
+            </div>
+            <h4 class="text-white font-bold text-lg leading-tight">${tx.label || (tx.asset_symbol ? tx.asset_symbol + ' ' + tx.type : tx.type)}</h4>
+            <p class="text-slate-400 text-sm mb-4">${(tx.type || '').replace(/_/g, ' ')}</p>
+            <div class="flex items-center justify-between border-t border-white/5 pt-4">
+              <span class="text-[10px] font-bold text-slate-500 uppercase">TX: ${tx.id.substring(0, 12)}</span>
+              <span class="text-[10px] text-slate-500">${new Date(tx.created_at).toLocaleDateString()}</span>
+            </div>
+          </div>`;
+                    });
+                }
+            }
+        }
+        loadTransactions();
+    </script>
+</body>
+
+</html>

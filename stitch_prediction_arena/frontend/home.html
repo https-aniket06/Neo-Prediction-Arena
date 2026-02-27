@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Neo Prediction Arena | AI-Powered FinTech Platform</title>
+    <meta name="description"
+        content="An AI-powered financial intelligence platform with real-time market predictions, portfolio management, smart transactions, and personalized strategy advisory." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-deep: #050a12;
+            --bg-card: rgba(12, 18, 30, 0.7);
+            --cyan: #00f2ff;
+            --magenta: #bc13fe;
+            --green: #39ff14;
+            --orange: #ec5b13;
+            --white: #f0f4f8;
+            --muted: #64748b;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============ ANIMATED BACKGROUND ============ */
+        .bg-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.25;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb.orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--cyan);
+            top: -10%;
+            left: -5%;
+            animation-delay: 0s;
+        }
+
+        .bg-orb.orb-2 {
+            width: 600px;
+            height: 600px;
+            background: var(--magenta);
+            bottom: -15%;
+            right: -10%;
+            animation-delay: -7s;
+        }
+
+        .bg-orb.orb-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--orange);
+            top: 40%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -40px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 30px) scale(0.95);
+            }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ============ HEADER ============ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 10, 18, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--cyan), var(--magenta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .logo-text span {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-badge {
+            padding: 4px 12px;
+            border-radius: 999px;
+            background: rgba(0, 242, 255, 0.1);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        .header-nav a {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            letter-spacing: 0.01em;
+        }
+
+        .header-nav a:hover {
+            color: var(--white);
+        }
+
+        .header-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 2rem 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(0, 242, 255, 0.15), rgba(188, 19, 254, 0.15));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            background: linear-gradient(180deg, var(--white), var(--muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--muted);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        /* ============ GALLERY GRID ============ */
+        .gallery-section {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 2rem 100px;
+        }
+
+        .gallery-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .gallery-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .gallery-count {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        @media (max-width: 840px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ============ CARD ============ */
+        .card {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.4),
+                0 0 30px var(--card-glow, rgba(0, 242, 255, 0.1));
+        }
+
+        .card-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover .card-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .card-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(5, 10, 18, 0.9) 100%);
+            pointer-events: none;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .badge-login {
+            background: rgba(188, 19, 254, 0.3);
+            color: #e879f9;
+        }
+
+        .badge-dashboard {
+            background: rgba(0, 242, 255, 0.2);
+            color: var(--cyan);
+        }
+
+        .badge-education {
+            background: rgba(57, 255, 20, 0.2);
+            color: var(--green);
+        }
+
+        .badge-portfolio {
+            background: rgba(236, 91, 19, 0.2);
+            color: var(--orange);
+        }
+
+        .badge-ai {
+            background: rgba(102, 255, 219, 0.2);
+            color: #66ffdb;
+        }
+
+        .badge-transactions {
+            background: rgba(189, 52, 254, 0.2);
+            color: #c084fc;
+        }
+
+        .card-body {
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .card-tag {
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .card-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-arrow {
+            background: var(--cyan);
+            color: var(--bg-deep);
+            border-color: var(--cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer p {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .footer .dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .footer .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .dot:nth-child(1) {
+            background: var(--cyan);
+            animation-delay: 0s;
+        }
+
+        .dot:nth-child(2) {
+            background: var(--magenta);
+            animation-delay: 0.3s;
+        }
+
+        .dot:nth-child(3) {
+            background: var(--green);
+            animation-delay: 0.6s;
+        }
+
+        /* ============ SCROLLBAR ============ */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ============ FADE-IN ANIMATION ============ */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .card:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .card:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+        .badge-trading {
+            background: rgba(102, 255, 219, 0.2);
+            color: #66ffdb;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-scene">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a class="logo" href="home.html">
+                <div class="logo-icon">
+                    <span class="material-symbols-outlined" style="color: white; font-size: 22px;">query_stats</span>
+                </div>
+                <div class="logo-text"><span>Neo</span> Prediction Arena</div>
+            </a>
+            <nav class="header-nav">
+                <a href="neo-financial-hub.html">Dashboard</a>
+                <a href="market-insights-portfolio.html">Portfolio</a>
+                <a href="ai-strategy-advisor.html">AI Advisor</a>
+                <a href="live-trading.html">Live Trading</a>
+                <a href="transactions-hub.html">Transactions</a>
+            </nav>
+            <div class="header-badge">Live Platform</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero fade-up">
+        <div class="hero-tag">GIFT Hackathon 2026</div>
+        <h1>
+            <span class="gradient-text">AI-Powered</span><br />Financial Intelligence
+        </h1>
+        <p>
+            A next-generation FinTech platform that combines real-time market data, AI-driven predictions, smart
+            portfolio management, and personalized financial strategy — all in one unified ecosystem.
+        </p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">Real-Time</div>
+                <div class="stat-label">Market Data</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">AI</div>
+                <div class="stat-label">Predictions</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">Smart</div>
+                <div class="stat-label">Portfolio Mgmt</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <h2>Platform Features</h2>
+            <div class="gallery-count">7 modules</div>
+        </div>
+        <div class="gallery-grid">
+
+
+
+            <!-- 2. Neo-Financial Hub (Dashboard) -->
+            <a class="card fade-up" href="neo-financial-hub.html" style="--card-glow: rgba(102, 255, 219, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="neo-financial-hub.png" alt="Market Intelligence Dashboard" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-dashboard">Dashboard</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Market Intelligence Dashboard</div>
+                    <div class="card-desc">Centralized command center with real-time net worth tracking, AI-powered
+                        market predictions, portfolio composition analysis, and asset performance rankings.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Real-Time</span>
+                            <span class="card-tag">AI Predictions</span>
+                            <span class="card-tag">Analytics</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3. AI Strategy Advisor -->
+            <a class="card fade-up" href="ai-strategy-advisor.html" style="--card-glow: rgba(102, 255, 219, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="ai-strategy-advisor.png" alt="AI Strategy Advisor" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-ai">AI Engine</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">AI Strategy Advisor</div>
+                    <div class="card-desc">Neural network-powered financial advisor that analyzes live market data, runs
+                        sentiment analysis, computes correlation matrices, and recommends actionable strategies.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">NLP</span>
+                            <span class="card-tag">Sentiment</span>
+                            <span class="card-tag">Strategy</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 4. Market Insights Portfolio Hub -->
+            <a class="card fade-up" href="market-insights-portfolio.html" style="--card-glow: rgba(236, 91, 19, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="market-insights-portfolio.png" alt="Portfolio Analytics Engine" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-portfolio">Portfolio</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Portfolio Analytics Engine</div>
+                    <div class="card-desc">Advanced portfolio monitoring with real-time data feeds, asset allocation
+                        visualization, risk scoring, and live market ticker integration across global exchanges.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Data Feeds</span>
+                            <span class="card-tag">Risk Score</span>
+                            <span class="card-tag">Multi-Exchange</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 5. Vibrant 3D Portfolio Hub -->
+            <a class="card fade-up" href="vibrant-3d-portfolio.html" style="--card-glow: rgba(236, 91, 19, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="vibrant-3d-portfolio.png" alt="Quantum Asset Manager" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-portfolio">Asset Manager</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Quantum Asset Manager</div>
+                    <div class="card-desc">Multi-chain asset manager supporting BTC, ETH, SOL, and stablecoins with
+                        real-time yield tracking, staking rewards, and automated rebalancing signals.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Multi-Chain</span>
+                            <span class="card-tag">Staking</span>
+                            <span class="card-tag">Yield</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 6. Transactions Hub -->
+            <a class="card fade-up" href="transactions-hub.html" style="--card-glow: rgba(189, 52, 254, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="transactions-hub.png" alt="Smart Transaction Engine" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-transactions">Transactions</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Smart Transaction Engine</div>
+                    <div class="card-desc">Unified transaction ledger with real-time liquidity flow monitoring,
+                        automated expense categorization, cash flow projections, and blockchain-verified confirmations.
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Ledger</span>
+                            <span class="card-tag">Cash Flow</span>
+                            <span class="card-tag">Blockchain</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 7. Financial Mastery Roadmap -->
+            <a class="card fade-up" href="financial-mastery-roadmap.html" style="--card-glow: rgba(57, 255, 20, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="financial-mastery-roadmap.png" alt="Financial Literacy Academy" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-education">Education</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">Financial Literacy Academy</div>
+                    <div class="card-desc">Gamified learning platform with structured modules on stocks, risk
+                        management, technical analysis, and digital assets — complete with quizzes, progress tracking,
+                        and badges.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Courses</span>
+                            <span class="card-tag">Quizzes</span>
+                            <span class="card-tag">Gamified</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 8. Live Trading Playground -->
+            <a class="card fade-up" href="live-trading.html" style="--card-glow: rgba(102, 255, 219, 0.15);">
+                <div class="card-img-wrap">
+                    <img src="live-trading.png" alt="Live Trading Playground" />
+                    <div class="card-img-overlay"></div>
+                    <div class="card-badge badge-trading">Live Trading</div>
+                </div>
+                <div class="card-body">
+                    <div class="card-title">AI Prediction Playground</div>
+                    <div class="card-desc">Real-time trading arena with live candlestick charts, AI-powered price
+                        predictions, neural confidence scoring, sentiment analysis, and position management.</div>
+                    <div class="card-footer">
+                        <div class="card-tags">
+                            <span class="card-tag">Candlestick</span>
+                            <span class="card-tag">AI Predict</span>
+                            <span class="card-tag">Live Data</span>
+                        </div>
+                        <div class="card-arrow">
+                            <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <p>&copy; 2026 Neo Prediction Arena — AI-Powered FinTech Platform · GIFT Hackathon</p>
+    </footer>
+
+    <script src="neo-api.js"></script>
+    <script>
+        if (!requireAuth()) throw 'Not authenticated';
+
+        // Add logout to header badge
+        const badge = document.querySelector('.header-badge');
+        if (badge) {
+            badge.style.cursor = 'pointer';
+            badge.textContent = '🔴 Logout';
+            badge.addEventListener('click', logout);
+        }
+    </script>
+</body>
+
+</html>

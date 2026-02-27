@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00f2ff",
+                        "neon-green": "#39ff14",
+                        "neon-purple": "#bc13fe",
+                        "deep-space": "#020617",
+                        "background-dark": "#050b1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px" },
+                },
+            },
+        }</script>
+    <style>
+        .star-field {
+            background:
+                radial-gradient(1px 1px at 20% 30%, #fff, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 40% 70%, #00f2ff, rgba(0, 0, 0, 0)),
+                radial-gradient(1px 1px at 50% 10%, #bc13fe, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 80% 40%, #39ff14, rgba(0, 0, 0, 0)),
+                radial-gradient(1px 1px at 90% 90%, #fff, rgba(0, 0, 0, 0)),
+                linear-gradient(to bottom, #050b1a, #0c1428);
+            background-attachment: fixed;
+        }
+
+        .cosmic-ribbon {
+            position: absolute;
+            width: 140%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00f2ff, #bc13fe, #39ff14, transparent);
+            filter: blur(2px) drop-shadow(0 0 15px rgba(0, 242, 255, 0.8));
+            transform: rotate(-5deg) skewX(-20deg);
+            z-index: 0;
+        }
+
+        .crystal-module {
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            perspective: 1000px;
+        }
+
+        .crystal-module:hover {
+            transform: translateY(-20px) scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        .floating-1 {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            animation: float 8s ease-in-out infinite 1s;
+        }
+
+        .floating-3 {
+            animation: float 7s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header
+            class="flex items-center justify-between border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 md:px-10 py-3 sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <div class="size-8 text-primary">
+                    <span class="material-symbols-outlined text-3xl">account_balance_wallet</span>
+                </div>
+                <h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">FinanceEdu</h2>
+            </div>
+            <nav class="hidden md:flex flex-1 justify-center gap-8">
+                <a class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                    href="#modules-section">Academy</a>
+                <a class="text-primary text-sm font-medium" href="financial-mastery-roadmap.html">Roadmap</a>
+                <a class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                    href="#modules-section">Quizzes</a>
+                <a class="text-slate-600 dark:text-slate-300 hover:text-primary transition-colors text-sm font-medium"
+                    href="neo-financial-hub.html">Portfolio</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <button onclick="showGlobalNotifications()"
+                    class="flex items-center justify-center rounded-lg size-10 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-white hover:bg-primary/20 transition-all">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button onclick="showGlobalSettings()"
+                    class="flex items-center justify-center rounded-lg size-10 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-white hover:bg-primary/20 transition-all">
+                    <span class="material-symbols-outlined">settings</span>
+                </button>
+                <div class="size-10 rounded-full border-2 border-primary overflow-hidden">
+                    <img class="w-full h-full object-cover" data-alt="User profile avatar smiling"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGpKbvrxyOoZaPQVqq0W5AUEyYnabwFEFHdAjTdI1bZ4zJiEWYGhCOezFlOXgQRqruxKpemwZXD_lruvMqIvd7gn0t6ReErOk8dXsYtgq6M_HbDb5gxbNMhQYT2vbcv-nCpbdb2zJdG8kbsdGGWV40GKyr4ycdQeHGqo4uGmKhMqinVlWnEgcqlJ-cuZwQJUPxVX6q8wyM4TqpczD2s9t8UJEHH_u420gcsXqoaKjVZNrcJdsAgp_i4iRpDrtRebViKc__xe9NIaVo" />
+                </div>
+            </div>
+        </header>
+        <main class="flex-1">
+            <!-- Hero & Floating Roadmap Area -->
+            <div
+                class="relative w-full min-h-[600px] overflow-hidden bg-deep-space star-field flex flex-col items-center justify-center px-4">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-deep-space/50 to-deep-space"></div>
+                <!-- Cosmic Ribbon Path -->
+                <div class="cosmic-ribbon top-1/2 left-[-20%]"></div>
+                <div class="relative z-20 text-center max-w-3xl mb-16">
+                    <span
+                        class="px-4 py-1 rounded-full bg-primary/20 text-primary border border-primary/50 text-xs font-black tracking-[0.2em] uppercase mb-6 inline-block animate-pulse">Universal
+                        Learning Path</span>
+                    <h1
+                        class="text-white text-5xl md:text-7xl font-black leading-tight tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary via-neon-purple to-neon-green">
+                        Financial Mastery <br />Cosmos</h1>
+                    <p class="text-slate-400 text-xl font-medium max-w-2xl mx-auto">Journey through the celestial
+                        architecture of wealth creation and market wisdom.</p>
+                </div>
+                <!-- 3D Floating Roadmap -->
+                <div class="relative z-10 w-full max-w-5xl h-64 flex items-center justify-between px-4">
+                    <!-- Point 1 -->
+                    <div class="crystal-module floating-1 flex flex-col items-center gap-6 translate-y-8">
+                        <div
+                            class="size-24 rounded-2xl bg-gradient-to-br from-primary to-blue-600 p-[2px] shadow-[0_0_40px_rgba(0,242,255,0.4)]">
+                            <div
+                                class="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center overflow-hidden relative">
+                                <div class="absolute inset-0 bg-primary/10 animate-pulse"></div>
+                                <span class="material-symbols-outlined text-4xl text-primary">diamond</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black text-primary tracking-widest uppercase">Foundations</span>
+                    </div>
+                    <!-- Point 2 -->
+                    <div class="crystal-module floating-2 flex flex-col items-center gap-6 -translate-y-12">
+                        <div
+                            class="size-32 rounded-full bg-gradient-to-br from-neon-purple to-pink-600 p-[3px] shadow-[0_0_60px_rgba(188,19,254,0.5)]">
+                            <div
+                                class="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden relative">
+                                <div class="absolute inset-0 bg-neon-purple/20"></div>
+                                <span
+                                    class="material-symbols-outlined text-6xl text-neon-purple animate-spin-slow">rocket_launch</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black text-white tracking-widest uppercase">Market Basics</span>
+                    </div>
+                    <!-- Point 3 -->
+                    <div class="crystal-module floating-3 flex flex-col items-center gap-6 translate-y-4 opacity-70">
+                        <div
+                            class="size-24 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 p-[2px] shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                            <div
+                                class="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center opacity-50">
+                                <span class="material-symbols-outlined text-4xl text-slate-500">lock</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black text-slate-500 tracking-widest uppercase">Risk Control</span>
+                    </div>
+                    <!-- Point 4 -->
+                    <div class="crystal-module floating-1 flex flex-col items-center gap-6 -translate-y-6 opacity-40">
+                        <div
+                            class="size-24 rounded-2xl bg-gradient-to-br from-neon-green to-emerald-900 p-[2px] shadow-[0_0_20px_rgba(57,255,20,0.1)]">
+                            <div
+                                class="w-full h-full rounded-2xl bg-slate-900 flex items-center justify-center opacity-50">
+                                <span class="material-symbols-outlined text-4xl text-neon-green">stars</span>
+                            </div>
+                        </div>
+                        <span class="text-sm font-black text-neon-green tracking-widest uppercase">Advanced Elite</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Grid -->
+            <div id="modules-section" class="max-w-7xl mx-auto px-6 py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column: Topic Cards -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold">Current Modules</h3>
+                            <button class="text-primary text-sm font-semibold flex items-center gap-1">View Library
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Topic Card 1 -->
+                            <div
+                                class="parallax-card bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-6 rounded-xl transition-all duration-300 group cursor-pointer glass-card">
+                                <div
+                                    class="size-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary mb-6 shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+                                    <span class="material-symbols-outlined text-3xl">show_chart</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Stocks
+                                    &amp; Equity</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Master the fundamentals of
+                                    stock selection and portfolio diversification.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">12
+                                        Lessons</span>
+                                    <span
+                                        class="px-2 py-1 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase">Beginner</span>
+                                </div>
+                            </div>
+                            <!-- Topic Card 2 -->
+                            <div
+                                class="parallax-card bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-6 rounded-xl transition-all duration-300 group cursor-pointer glass-card">
+                                <div
+                                    class="size-12 rounded-lg bg-neon-purple/20 flex items-center justify-center text-neon-purple mb-6 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+                                    <span class="material-symbols-outlined text-3xl">shield</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors">Risk
+                                    Management</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">Learn to protect your capital
+                                    using stop-losses and hedge strategies.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">8
+                                        Lessons</span>
+                                    <span
+                                        class="px-2 py-1 rounded bg-orange-500/10 text-orange-500 text-[10px] font-bold uppercase">Intermediate</span>
+                                </div>
+                            </div>
+                            <!-- Topic Card 3 -->
+                            <div
+                                class="parallax-card bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-6 rounded-xl transition-all duration-300 group cursor-pointer glass-card">
+                                <div
+                                    class="size-12 rounded-lg bg-neon-green/20 flex items-center justify-center text-neon-green mb-6 shadow-[0_0_15px_rgba(57,255,20,0.3)]">
+                                    <span class="material-symbols-outlined text-3xl">analytics</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-neon-green transition-colors">Market
+                                    Indicators</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">RSI, MACD, and Bollinger
+                                    Bands. Decode price action like a pro.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">15
+                                        Lessons</span>
+                                    <span
+                                        class="px-2 py-1 rounded bg-blue-500/10 text-blue-500 text-[10px] font-bold uppercase">Advanced</span>
+                                </div>
+                            </div>
+                            <!-- Topic Card 4 -->
+                            <div
+                                class="parallax-card bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-6 rounded-xl transition-all duration-300 group cursor-pointer glass-card">
+                                <div
+                                    class="size-12 rounded-lg bg-primary/20 flex items-center justify-center text-primary mb-6 shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+                                    <span class="material-symbols-outlined text-3xl">currency_bitcoin</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 group-hover:text-purple-500 transition-colors">Digital
+                                    Assets</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">DeFi, NFTs and Blockchain.
+                                    Understanding the future of finance.</p>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">10
+                                        Lessons</span>
+                                    <span
+                                        class="px-2 py-1 rounded bg-purple-500/10 text-purple-500 text-[10px] font-bold uppercase">Advanced</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Progress & Quiz Stats -->
+                    <div class="space-y-8">
+                        <!-- Progress Timeline -->
+                        <div
+                            class="bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 p-6 rounded-xl">
+                            <h3 class="text-lg font-bold mb-6">Course Progress</h3>
+                            <div class="space-y-6" id="progress-timeline">
+                                <div class="flex justify-center p-4">
+                                    <div
+                                        class="animate-spin size-6 border-2 border-primary border-t-transparent rounded-full">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Quiz Success Placeholder -->
+                        <div id="last-quiz-container" class="hidden">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Bottom CTA Bar -->
+        <footer class="bg-slate-200 dark:bg-slate-900 border-t border-slate-300 dark:border-slate-800 py-12 px-6">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                    <h2 class="text-2xl font-bold mb-2">Ready for the next level?</h2>
+                    <p class="text-slate-600 dark:text-slate-400">Join 50k+ learners mastering the global markets.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button id="continue-learning-btn" onclick="startQuiz('mod_001')"
+                        class="px-8 py-3 rounded-lg bg-primary text-background-dark font-bold hover:brightness-110 transition-all shadow-lg shadow-primary/20">
+                        Continue Learning
+                    </button>
+                    <button onclick="showGlobalModal('Support Center', '<p>Routing to an agent... Please hold.</p>')"
+                        class="px-8 py-3 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                        Support Center
+                    </button>
+                </div>
+            </div>
+            <div
+                class="max-w-7xl mx-auto mt-12 pt-8 border-t border-slate-300 dark:border-slate-800 flex flex-col md:flex-row justify-between gap-4 text-xs text-slate-500 font-medium">
+                <p>© 2024 FinanceEdu Learning Systems. All Rights Reserved.</p>
+                <div class="flex gap-6">
+                    <a class="hover:text-primary" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary" href="#">Terms of Service</a>
+                    <a class="hover:text-primary" href="#">Cookie Settings</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Quiz Modal -->
+    <div id="quiz-modal"
+        class="fixed inset-0 z-[100] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div
+            class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl glass-card">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950/50">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2" id="quiz-title">
+                    <span class="material-symbols-outlined text-primary">school</span> Loading...
+                </h3>
+                <button onclick="document.getElementById('quiz-modal').classList.add('hidden')"
+                    class="text-slate-400 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 max-h-[70vh] overflow-y-auto" id="quiz-content">
+                <div class="flex justify-center p-8">
+                    <div class="animate-spin size-8 border-4 border-primary border-t-transparent rounded-full"></div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-slate-800 bg-slate-950/50 flex justify-end gap-3 hidden" id="quiz-footer">
+                <button onclick="document.getElementById('quiz-modal').classList.add('hidden')"
+                    class="px-4 py-2 rounded-lg font-medium text-slate-300 hover:text-white transition-colors">Cancel</button>
+                <button onclick="submitQuiz()"
+                    class="px-6 py-2 rounded-lg font-medium bg-primary text-black hover:bg-primary/80 transition-colors">Submit
+                    Answers</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="neo-api.js"></script>
+    <script>
+        if (!requireAuth()) throw 'Not authenticated';
+
+        async function loadEducation() {
+            const data = await apiGet('/education/modules');
+            if (data?.data) {
+                const grid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.gap-6');
+                const progressTimeline = document.getElementById('progress-timeline');
+
+                if (grid) {
+                    grid.innerHTML = '';
+                    if (progressTimeline) progressTimeline.innerHTML = '';
+
+                    const colors = ['primary', 'neon-purple', 'neon-green', 'primary'];
+                    const icons = ['show_chart', 'shield', 'analytics', 'currency_bitcoin'];
+                    data.data.forEach((m, i) => {
+                        const color = colors[i % colors.length];
+                        const icon = icons[i % icons.length];
+                        const levelColors = { beginner: 'primary', intermediate: 'orange-500', advanced: 'blue-500' };
+                        const levelColor = levelColors[m.level?.toLowerCase()] || 'primary';
+
+                        grid.innerHTML += `
+          <div class="parallax-card bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-6 rounded-xl transition-all duration-300 group cursor-pointer glass-card hover:border-${color}/50" onclick="startQuiz('${m.id}')">
+            <div class="size-12 rounded-lg bg-${color}/20 flex items-center justify-center text-${color} mb-6 shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+              <span class="material-symbols-outlined text-3xl">${icon}</span>
+            </div>
+            <h4 class="text-xl font-bold mb-2 group-hover:text-${color} transition-colors">${m.title}</h4>
+            <p class="text-slate-600 dark:text-slate-400 text-sm mb-6">${m.description}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">${m.lesson_count || 0} Lessons</span>
+              <span class="px-2 py-1 rounded bg-${levelColor}/10 text-${levelColor} text-[10px] font-bold uppercase">${m.level || m.category || 'Beginner'}</span>
+            </div>
+            ${m.user_progress?.pct !== undefined ? `<div class="mt-4 h-1.5 w-full bg-slate-700 rounded-full overflow-hidden"><div class="h-full bg-${color}" style="width:${m.user_progress.pct}%"></div></div>` : ''}
+          </div>`;
+
+                        // Render Progress Timeline
+                        if (progressTimeline) {
+                            let statusHtml = '';
+                            if (m.user_progress?.status === 'COMPLETED') {
+                                statusHtml = `
+                                <div class="flex items-start gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="size-6 rounded-full bg-primary flex items-center justify-center text-background-dark">
+                                            <span class="material-symbols-outlined text-xs font-bold">check</span>
+                                        </div>
+                                        ${i < data.data.length - 1 ? '<div class="w-0.5 h-12 bg-primary"></div>' : ''}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">${m.title}</p>
+                                        <p class="text-xs text-slate-500">Completed ${m.user_progress.completed_at ? 'on ' + m.user_progress.completed_at : ''}</p>
+                                    </div>
+                                </div>`;
+                            } else if (m.user_progress?.status === 'IN_PROGRESS') {
+                                statusHtml = `
+                                <div class="flex items-start gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="size-6 rounded-full border-2 border-primary flex items-center justify-center">
+                                            <div class="size-2 rounded-full bg-primary animate-ping"></div>
+                                        </div>
+                                        ${i < data.data.length - 1 ? '<div class="w-0.5 h-12 bg-slate-700"></div>' : ''}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-primary">${m.title}</p>
+                                        <p class="text-xs text-slate-500">In Progress - ${m.user_progress.pct}%</p>
+                                    </div>
+                                </div>`;
+                            } else {
+                                statusHtml = `
+                                <div class="flex items-start gap-4 opacity-50">
+                                    <div class="flex flex-col items-center">
+                                        <div class="size-6 rounded-full border-2 border-slate-700 flex items-center justify-center text-slate-500">
+                                            <span class="material-symbols-outlined text-xs">${m.is_locked ? 'lock' : 'circle'}</span>
+                                        </div>
+                                        ${i < data.data.length - 1 ? '<div class="w-0.5 h-12 bg-slate-700"></div>' : ''}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-300">${m.title}</p>
+                                        <p class="text-xs text-slate-500">${m.is_locked ? 'Locked' : 'Not Started'}</p>
+                                    </div>
+                                </div>`;
+                            }
+                            progressTimeline.innerHTML += statusHtml;
+                        }
+                    });
+
+                    // Update Last Quiz Stats
+                    const lastQuizContainer = document.getElementById('last-quiz-container');
+                    const completedModules = data.data.filter(m => m.user_progress?.status === 'COMPLETED');
+
+                    if (completedModules.length > 0 && lastQuizContainer) {
+                        const lastMod = completedModules[completedModules.length - 1]; // Assume last is most recent
+                        const passed = lastMod.user_progress.pct >= 70;
+                        const score = lastMod.user_progress.pct;
+
+                        lastQuizContainer.className = "relative overflow-hidden bg-gradient-to-br from-primary via-neon-purple to-neon-green p-6 rounded-xl shadow-2xl shadow-primary/20";
+                        lastQuizContainer.innerHTML = `
+                            <div class="absolute -right-8 -top-8 size-32 rounded-full bg-white/10 blur-2xl"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-xs font-black uppercase tracking-widest bg-black/30 px-2 py-0.5 rounded text-white">Last Quiz: ${lastMod.title}</span>
+                                    <span class="material-symbols-outlined text-white">workspace_premium</span>
+                                </div>
+                                <h3 class="text-3xl font-black mb-2 text-white">${score}% Score</h3>
+                                <p class="text-sm font-medium text-white/90 mb-6">${passed ? 'Awesome job!' : 'Keep practicing!'}</p>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-black/20 p-3 rounded-lg backdrop-blur-md border border-white/10">
+                                        <p class="text-[10px] uppercase font-bold text-white/60">Status</p>
+                                        <p class="text-xl font-bold text-white">${passed ? 'PASSED' : 'FAILED'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (lastQuizContainer) {
+                        lastQuizContainer.className = "hidden";
+                    }
+
+                    // Update Continue Learning button to point to next uncompleted module
+                    const continueBtn = document.getElementById('continue-learning-btn');
+                    if (continueBtn) {
+                        const nextMod = data.data.find(m => m.user_progress?.status !== 'COMPLETED');
+                        if (nextMod) {
+                            continueBtn.onclick = () => startQuiz(nextMod.id);
+                            continueBtn.textContent = 'Continue Learning';
+                        } else {
+                            continueBtn.onclick = () => showGlobalModal('All Completed', '<p>You have finished all available modules! Stay tuned for more.</p>');
+                            continueBtn.textContent = 'All Modules Finished';
+                        }
+                    }
+                }
+            }
+        }
+
+        let currentQuiz = null;
+        let quizAnswers = {};
+
+        async function startQuiz(moduleId = 'mod_001') {
+            document.getElementById('quiz-modal').classList.remove('hidden');
+            document.getElementById('quiz-content').innerHTML = '<div class="flex justify-center p-8"><div class="animate-spin size-8 border-4 border-primary border-t-transparent rounded-full"></div></div>';
+            document.getElementById('quiz-footer').classList.add('hidden');
+
+            const req = await apiGet(`/education/quizzes/${moduleId}`);
+            if (req) {
+                currentQuiz = req;
+                quizAnswers = {};
+                document.getElementById('quiz-title').innerHTML = `<span class="material-symbols-outlined text-primary">school</span> ${req.title}`;
+
+                let content = '<div class="space-y-6">';
+                req.questions.forEach((q, i) => {
+                    content += `
+                    <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                        <p class="font-bold text-white mb-4">${i + 1}. ${q.text}</p>
+                        <div class="space-y-2">
+                            ${q.options.map((opt, j) => `
+                            <label class="flex items-center p-3 rounded-lg border border-slate-700 hover:bg-slate-700/50 cursor-pointer transition-colors ${quizAnswers[q.id] === j ? 'bg-primary/20 border-primary' : ''}">
+                                <input type="radio" name="q_${q.id}" value="${j}" onchange="selectAnswer('${q.id}', ${j})" class="hidden" />
+                                <div class="size-4 rounded-full border border-slate-400 mr-3 flex items-center justify-center">
+                                   <div class="size-2 rounded-full bg-primary hidden indicator-${q.id}-${j}"></div>
+                                </div>
+                                <span class="text-slate-300">${opt}</span>
+                            </label>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                });
+                content += '</div>';
+                document.getElementById('quiz-content').innerHTML = content;
+                document.getElementById('quiz-footer').classList.remove('hidden');
+            } else {
+                document.getElementById('quiz-content').innerHTML = '<div class="text-red-400 text-center p-4">Failed to load quiz. Coming Soon.</div>';
+            }
+        }
+
+        function selectAnswer(qId, idx) {
+            quizAnswers[qId] = idx;
+            document.querySelectorAll(`input[name="q_${qId}"]`).forEach((el, i) => {
+                const parent = el.parentElement;
+                const dot = parent.querySelector(`.indicator-${qId}-${i}`);
+                if (i === idx) {
+                    parent.classList.add('bg-primary/20', 'border-primary');
+                    if (dot) dot.classList.remove('hidden');
+                } else {
+                    parent.classList.remove('bg-primary/20', 'border-primary');
+                    if (dot) dot.classList.add('hidden');
+                }
+            });
+        }
+
+        async function submitQuiz() {
+            if (Object.keys(quizAnswers).length < currentQuiz.questions.length) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            const submitBtn = document.querySelector('#quiz-footer button.bg-primary');
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            const answers = currentQuiz.questions.map(q => quizAnswers[q.id]);
+            const res = await apiPost(`/education/quizzes/${currentQuiz.quiz_id}/submit`, { answers });
+
+            submitBtn.textContent = 'Submit Answers';
+            submitBtn.disabled = false;
+
+            if (res) {
+                document.getElementById('quiz-footer').classList.add('hidden');
+                document.getElementById('quiz-content').innerHTML = `
+                <div class="text-center p-8 space-y-4">
+                    <div class="size-20 mx-auto rounded-full ${res.passed ? 'bg-neon-green/20 text-neon-green border border-neon-green' : 'bg-red-500/20 text-red-500 border border-red-500'} flex items-center justify-center">
+                        <span class="material-symbols-outlined text-4xl">${res.passed ? 'emoji_events' : 'sentiment_dissatisfied'}</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-white">${res.score_pct}%</h2>
+                    <p class="text-slate-300">${res.passed ? 'Excellent! You passed the quiz.' : 'Keep studying, you did not pass this time.'}</p>
+                    <div class="flex justify-center gap-4 mt-6">
+                        <div class="bg-slate-800 p-3 rounded-lg text-center min-w-24 border border-slate-700">
+                            <p class="text-xs text-slate-400 uppercase">Correct</p>
+                            <p class="text-xl font-bold text-white">${res.correct}/${res.total}</p>
+                        </div>
+                        <div class="bg-slate-800 p-3 rounded-lg text-center min-w-24 border border-slate-700">
+                            <p class="text-xs text-slate-400 uppercase">XP Earned</p>
+                            <p class="text-xl font-bold text-primary">+${res.xp_earned}</p>
+                        </div>
+                    </div>
+                    ${res.badge_unlocked ? `
+                    <div class="mt-6 p-4 border border-neon-purple bg-neon-purple/10 rounded-xl inline-block text-left">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-3xl text-neon-purple">military_tech</span>
+                            <div>
+                                <p class="text-neon-purple font-bold text-sm uppercase">Badge Unlocked!</p>
+                                <p class="text-white font-bold">${res.badge_unlocked.name}</p>
+                            </div>
+                        </div>
+                    </div>` : ''}
+                    <div class="pt-6">
+                        <button onclick="document.getElementById('quiz-modal').classList.add('hidden')" class="px-6 py-2 rounded-lg font-medium bg-slate-700 text-white hover:bg-slate-600 transition-colors">Close</button>
+                    </div>
+                </div>`;
+
+                // Reload education data to update progress
+                loadEducation();
+            } else {
+                alert('Submission failed.');
+            }
+        }
+
+        loadEducation();
+    </script>
+</body>
+
+</html>
